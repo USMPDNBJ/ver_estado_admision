@@ -2,8 +2,10 @@ namespace Ver_Estado_Admision{
 
     public class Alumno
     {
-        string nombre { get; set; }
-        string apellidoPaterno { get; set; }
-        string apellidoMaterno { get; set; }
+        public required string Nombre { get; set; }
+        public required string ApellidoPaterno { get; set; }
+        public required string ApellidoMaterno { get; set; }
+        public required string DNI { get; set; }
+        public required string NumeroPasaporte { get; set; }
     }
 }
