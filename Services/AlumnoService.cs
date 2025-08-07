@@ -14,21 +14,29 @@ public class AlumnoService : IAlumnoService
 
     public async Task<AlumnoByNumDocResponse?> ObtenerPorNumDocAsync(string numDoc)
     {
-        Alumno? alumno = null;
-        if (numDoc.Length == 8)
+        if (string.IsNullOrWhiteSpace(numDoc) || (numDoc.Length != 8 && numDoc.Length != 9))
         {
-            alumno = _context.Alumnos
-            .FirstOrDefault(a => a.DNI.Equals(numDoc));
+            return null;
         }
-        else if (numDoc.Length == 9)
+
+        var preInscripcion = await _context.Preinscripcion
+            .Include(a => a.Postulante)
+            .FirstOrDefaultAsync(a => a.NumeroDocumento == numDoc)            
+            ;
+
+        if (preInscripcion == null)
         {
-            alumno =  _context.Alumnos.FirstOrDefault(a => a.NumeroPasaporte.Equals(numDoc));
+            return null;
         }
-        else
+
+        var alumnoResponse = new AlumnoByNumDocResponse
         {
-            alumno = null;
-        }
-        AlumnoByNumDocResponse alumnoResponse = new AlumnoByNumDocResponse();
+            NumDoc = preInscripcion.NumeroDocumento,
+            Nombre = preInscripcion.Nombre,
+            ApellidoMaterno = preInscripcion.ApellidoMaterno,
+            ApellidoPaterno = preInscripcion.ApellidoPaterno,
+            EstadoAdmision = preInscripcion.Postulante.Resultado
+        };
         return alumnoResponse;
     }
 }

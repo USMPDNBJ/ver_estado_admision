@@ -1,7 +1,8 @@
+using Dto.Response;
 using Microsoft.EntityFrameworkCore;
 using Models;
 
 public interface IAlumnoService
 {
-    Task<Alumno?> ObtenerPorNumDocAsync(string numDoc);
+    Task<AlumnoByNumDocResponse?> ObtenerPorNumDocAsync(string numDoc);
 }

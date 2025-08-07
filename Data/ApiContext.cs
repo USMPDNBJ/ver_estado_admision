@@ -7,14 +7,36 @@ namespace Data
     {
         public ApiContext(DbContextOptions<ApiContext> options) : base(options) { }
 
-        public DbSet<Alumno> Alumnos { get; set; }
+        public DbSet<PreInscripcion> Preinscripcion { get; set; }
+        public DbSet<Postulante> Postulantes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<PreInscripcion>()
+    .ToTable("MA_PREINSCRIPCION", schema: "OAUSMP");
+            modelBuilder.Entity<Postulante>()
+.ToTable("MA_POSTULANTE", schema: "OAUSMP");
+            modelBuilder.Entity<PreInscripcion>()
+            .HasOne(p => p.Postulante)
+            .WithOne(p => p.PreInscripcion)
+            .HasForeignKey<Postulante>(p => p.Id);
         }
 
-
+        public async Task VerificarConexionAsync()
+        {
+            try
+            {
+                // Intentar una operación simple como una consulta
+                await this.Database.OpenConnectionAsync();
+                await this.Database.CloseConnectionAsync();
+                Console.WriteLine("Conexión exitosa a la base de datos Oracle.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al conectar a la base de datos: {ex.Message}");
+            }
+        }
     }
 
 }

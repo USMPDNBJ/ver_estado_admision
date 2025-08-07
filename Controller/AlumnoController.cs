@@ -1,3 +1,4 @@
+using Dto.Response;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Models;
@@ -13,10 +14,15 @@ namespace MyApp.Namespace
         {
             _AlumnoService = AlumnoService;
         }
-        [HttpGet("{numDoc}")]   
-        public IActionResult<Alumno> ObtenerAlumnoByNumDoc(string numDoc)
+        [HttpGet("{numDoc}")]
+        public async Task<IActionResult> ObtenerAlumnoByNumDoc(string numDoc)
         {
-            
+            var alumnoResponse = await _AlumnoService.ObtenerPorNumDocAsync(numDoc);
+            if (alumnoResponse == null)
+            {
+                return BadRequest("Not found");
+            }
+            return Ok(alumnoResponse);
         }
     }
 }
