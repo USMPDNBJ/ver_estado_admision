@@ -9,6 +9,16 @@ builder.Services.AddControllers();
 builder.Services.AddScoped<IAlumnoService, AlumnoService>();
 builder.Services.AddDbContext<ApiContext>(options =>
 options.UseOracle(builder.Configuration.GetConnectionString("OracleDb")));
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("PermitirTodos", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
+
 var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
@@ -21,8 +31,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
 builder.WebHost.UseUrls("http://10.4.17.10:5034");
 app.UseHttpsRedirection();
+app.UseCors("PermitirTodos");
 app.UseAuthorization();
 app.MapControllers();
 
