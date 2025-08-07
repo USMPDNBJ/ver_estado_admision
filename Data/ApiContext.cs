@@ -1,11 +1,11 @@
 using Microsoft.EntityFrameworkCore;
-using Ver_Estado_Admision;
+using Models;
 
 namespace Data
 {
-    public class OracleContext : DbContext
+    public class ApiContext : DbContext
     {
-        public OracleContext(DbContextOptions<OracleContext> options) : base(options) { }
+        public ApiContext(DbContextOptions<ApiContext> options) : base(options) { }
 
         public DbSet<Alumno> Alumnos { get; set; }
 

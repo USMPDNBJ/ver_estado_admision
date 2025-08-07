@@ -4,13 +4,20 @@ namespace Dto.Response
 {
     public class AlumnoByNumDocResponse
     {
+        public AlumnoByNumDocResponse()
+        {
+            
+        }
+        
         [Required]
-        public required string Nombre { get; set; }
+        public string Nombre { get; set; }
         [Required]
-        public required string ApellidoPaterno { get; set; }
+        public  string ApellidoPaterno { get; set; }
         [Required]
-        public required string ApellidoMaterno { get; set; }
+        public  string ApellidoMaterno { get; set; }
         [Required]
-        public required string EstadoAdmision { get; set; }
+        public  string EstadoAdmision { get; set; }
+        [Required]
+        public  string numDoc { get; set; }
     }
 }

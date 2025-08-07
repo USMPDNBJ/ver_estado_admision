@@ -1,4 +1,4 @@
-namespace Ver_Estado_Admision{
+namespace Models{
 
     public class Alumno
     {
