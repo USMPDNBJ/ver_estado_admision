@@ -21,7 +21,7 @@ public class AlumnoService : IAlumnoService
 
         var preInscripcion = await _context.Preinscripcion
             .Include(a => a.Postulante)
-            .FirstOrDefaultAsync(a => a.NumeroDocumento == numDoc)            
+            .FirstOrDefaultAsync(a => a.NumeroDocumento == numDoc)
             ;
 
         if (preInscripcion == null)
@@ -35,7 +35,12 @@ public class AlumnoService : IAlumnoService
             Nombre = preInscripcion.Nombre,
             ApellidoMaterno = preInscripcion.ApellidoMaterno,
             ApellidoPaterno = preInscripcion.ApellidoPaterno,
-            EstadoAdmision = preInscripcion.Postulante.Resultado
+            EstadoAdmision = preInscripcion.Postulante?.Resultado?.ToUpper() switch
+            {
+                "ADMITIDO" => "Aprobado",
+                "NO ADMITIDO" => "Desaprobado",
+                _ => "No especificado"
+            }
         };
         return alumnoResponse;
     }
