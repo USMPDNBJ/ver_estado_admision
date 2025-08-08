@@ -14,6 +14,7 @@ namespace MyApp.Namespace
         {
             _AlumnoService = AlumnoService;
         }
+        
         [HttpGet("{numDoc}")]
         public async Task<IActionResult> ObtenerAlumnoByNumDoc(string numDoc)
         {

@@ -15,5 +15,7 @@ namespace Dto.Response
         public  string EstadoAdmision { get; set; }
         [Required]
         public  string NumDoc { get; set; }
+        [Required]
+        public  string Sede { get; set; }
     }
 }

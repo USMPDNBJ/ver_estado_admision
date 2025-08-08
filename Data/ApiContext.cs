@@ -9,12 +9,15 @@ namespace Data
 
         public DbSet<PreInscripcion> Preinscripcion { get; set; }
         public DbSet<Postulante> Postulantes { get; set; }
+        public DbSet<Sede> Sede { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<PreInscripcion>()
     .ToTable("MA_PREINSCRIPCION", schema: "OAUSMP");
+            modelBuilder.Entity<Sede>()
+            .ToTable("TA_SEDE", schema: "OAUSMP");
             modelBuilder.Entity<Postulante>()
 .ToTable("MA_POSTULANTE", schema: "OAUSMP");
             modelBuilder.Entity<PreInscripcion>()
