@@ -18,22 +18,27 @@ public class AlumnoService : IAlumnoService
         {
             return null;
         }
-
+        var codModPermitidos = new[] { "001", "111", "110", "002", "026", "008", "043", "143", "049", "147", "145", "033", "142", "144", "146", "141" };
         var preInscripcion = await _context.Preinscripcion
             .Include(a => a.Postulante)
             .Include(a => a.Sede)
-            .Where(a => a.FechaCreacion > new DateTime(2025, 1, 1) && a.NumeroDocumento == numDoc)
+            .Include(a => a.Vacante)
+            .Where(a => (a.Vacante.SemApe.Equals("20252") || a.Vacante.SemApe.Equals("20261")) &&
+        codModPermitidos.Contains(a.Vacante.Modalidad.CodMod) &&         
+        a.NumeroDocumento == numDoc)
                         .Select(a => new AlumnoByNumDocResponse
                         {
                             NumDoc = a.NumeroDocumento,
                             Nombre = a.Nombre,
                             ApellidoMaterno = a.ApellidoMaterno,
                             ApellidoPaterno = a.ApellidoPaterno,
-                            EstadoAdmision = a.Postulante != null && a.Postulante.Resultado != null
-                             ? (a.Postulante.Resultado.ToUpper().Equals("ADMITIDO") ? "Aprobado" :
-               a.Postulante.Resultado.ToUpper().Equals("NO ADMITIDO") ? "Desaprobado" : "No especificado")
+                            EstadoAdmision = a.Postulante != null
+                             ? (a.Postulante.Resultado.ToUpper().Trim().Equals("ADMITIDO") ? "Aprobado" :
+               a.Postulante.Resultado.ToUpper().Trim().Equals("NO ADMITIDO") ? "Desaprobado" : "No especificado")
             : "No especificado",
-                            Sede =  a.Sede.Descripcion
+                            Modalidad = a.Vacante.Modalidad.Descripcion,
+                            Sede = a.Sede.Descripcion,
+                            Especialidad = a.Vacante.Especialidad.Descripcion
                         })
             .FirstOrDefaultAsync();
 

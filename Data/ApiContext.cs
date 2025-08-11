@@ -10,6 +10,9 @@ namespace Data
         public DbSet<PreInscripcion> Preinscripcion { get; set; }
         public DbSet<Postulante> Postulantes { get; set; }
         public DbSet<Sede> Sede { get; set; }
+        public DbSet<Vacante> Vacantes { get; set; }
+        public DbSet<Modalidad> Modalidades { get; set; }
+        public DbSet<Especialidad> Especialidades { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

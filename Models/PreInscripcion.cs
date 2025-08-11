@@ -19,6 +19,8 @@ namespace Models
         public  string NumeroDocumento { get; set; }
         [ForeignKey("Id")]
         public Postulante Postulante { get; set; }
+        [ForeignKey("COD_VAC")]
+        public Vacante Vacante { get; set; }
         [ForeignKey("COD_SED")]
         public required Sede Sede { get; set; }
         [Column("FEC_CRE")]
