@@ -12,6 +12,7 @@ namespace Dto.Response
         public  string NumDoc { get; set; }
         public  string Sede { get; set; }
         public  string Modalidad { get; set; }
+        public  string CodEspecialidad { get; set; }
         public  string Especialidad { get; set; }
     }
 }

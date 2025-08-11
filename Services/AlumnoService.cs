@@ -23,8 +23,8 @@ public class AlumnoService : IAlumnoService
             .Include(a => a.Postulante)
             .Include(a => a.Sede)
             .Include(a => a.Vacante)
-            .Where(a => (a.Vacante.SemApe.Equals("20252") || a.Vacante.SemApe.Equals("20261")) &&
-        codModPermitidos.Contains(a.Vacante.Modalidad.CodMod) &&         
+            .Where(a => (a.Vacante.SemApe.Trim().Equals("20252") || a.Vacante.SemApe.Trim().Equals("20261")) &&
+        codModPermitidos.Contains(a.Vacante.Modalidad.CodMod.Trim()) &&         
         a.NumeroDocumento == numDoc)
                         .Select(a => new AlumnoByNumDocResponse
                         {
@@ -38,6 +38,7 @@ public class AlumnoService : IAlumnoService
             : "No especificado",
                             Modalidad = a.Vacante.Modalidad.Descripcion,
                             Sede = a.Sede.Descripcion,
+                            CodEspecialidad = a.Vacante.Especialidad.CodEsp.Trim(),
                             Especialidad = a.Vacante.Especialidad.Descripcion
                         })
             .FirstOrDefaultAsync();
