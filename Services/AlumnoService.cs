@@ -24,8 +24,8 @@ public class AlumnoService : IAlumnoService
             .Include(a => a.Sede)
             .Include(a => a.Vacante)
             .Where(a => (a.Vacante.SemApe.Trim().Equals("20252") || a.Vacante.SemApe.Trim().Equals("20261")) &&
-        codModPermitidos.Contains(a.Vacante.Modalidad.CodMod.Trim()) &&         
-        a.NumeroDocumento == numDoc)
+        codModPermitidos.Contains(a.Vacante.Modalidad.CodMod.Trim()) &&
+        a.NumeroDocumento == numDoc && a.Vacante.Especialidad.CodGra.Trim().Equals("001"))
                         .Select(a => new AlumnoByNumDocResponse
                         {
                             NumDoc = a.NumeroDocumento,

@@ -13,6 +13,7 @@ namespace Data
         public DbSet<Vacante> Vacantes { get; set; }
         public DbSet<Modalidad> Modalidades { get; set; }
         public DbSet<Especialidad> Especialidades { get; set; }
+        public DbSet<Usuarios> Usuarios { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

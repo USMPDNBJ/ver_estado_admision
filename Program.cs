@@ -7,6 +7,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
 builder.Services.AddScoped<IAlumnoService, AlumnoService>();
+builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 builder.Services.AddDbContext<ApiContext>(options =>
 options.UseOracle(builder.Configuration.GetConnectionString("OracleDb")));
 builder.Services.AddCors(options =>
@@ -26,13 +27,12 @@ using (var scope = app.Services.CreateScope())
     await dbContext.VerificarConexionAsync();
 }
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
 
-builder.WebHost.UseUrls("http://10.4.17.10:5034");
+
+app.UseSwagger();
+app.UseSwaggerUI();
+
+builder.WebHost.UseUrls("http://10.4.17.10:4034");
 app.UseHttpsRedirection();
 app.UseCors("PermitirTodos");
 app.UseAuthorization();

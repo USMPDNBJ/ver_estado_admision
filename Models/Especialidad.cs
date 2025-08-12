@@ -12,5 +12,7 @@ namespace Models
         public string CodEsp { get; set; }
         [Column("DES_ESP")]
         public string Descripcion { get; set; }
+        [Column("CODGRA")]
+        public string CodGra { get; set; }
     }
 }
