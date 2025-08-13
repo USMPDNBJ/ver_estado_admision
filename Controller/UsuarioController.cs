@@ -15,16 +15,23 @@ namespace MyApp.Namespace
         {
             _usuarioService = usuarioService;
         }
-        
+
         [HttpPost("login")]
+        [ProducesResponseType(typeof(UsuarioLoginRes), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> ValidarCredenciales(UsuarioLoginReq request)
         {
-            if (request ==null)
+            if (request == null)
             {
                 return BadRequest("No se envio correctamente las credenciales");
             }
 
-            string? response = await _usuarioService.ValidarCredenciales(request);
+            UsuarioLoginRes? response = await _usuarioService.ValidarCredenciales(request);
+            if (response == null)
+            {
+                return Unauthorized("Credenciales invalidas");
+            }
             return Ok(response);
         }
     }

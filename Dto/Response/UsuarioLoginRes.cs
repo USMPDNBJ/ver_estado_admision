@@ -4,9 +4,7 @@ namespace Dto.Request
 {
     public class UsuarioLoginRes
     {
-        [Required]
-        public required string Usuario { get; set; }
-        [Required]
-        public required string Contrasena { get; set; }
+        public  string Mensaje { get; set; }
+        public string Codigo { get; set; }
     }
 }

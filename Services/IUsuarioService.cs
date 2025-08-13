@@ -5,5 +5,5 @@ using Models;
 
 public interface IUsuarioService
 {
-    Task<string?> ValidarCredenciales(UsuarioLoginReq request);
+    Task<UsuarioLoginRes?> ValidarCredenciales(UsuarioLoginReq request);
 }

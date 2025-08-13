@@ -14,8 +14,9 @@ namespace MyApp.Namespace
         {
             _AlumnoService = AlumnoService;
         }
-        
+
         [HttpGet("{numDoc}")]
+        [ProducesResponseType(typeof(AlumnoByNumDocResponse), StatusCodes.Status200OK)]
         public async Task<IActionResult> ObtenerAlumnoByNumDoc(string numDoc)
         {
             var alumnoResponse = await _AlumnoService.ObtenerPorNumDocAsync(numDoc);
