@@ -29,29 +29,39 @@ public class UsuarioService : IUsuarioService
         }
         else
         {
-            verify = ValidarSHA256(request.Contrasena.ToUpper(), user.Contrasena.ToUpper());
+            verify = ValidarSHA256(request.Contrasena, user.Contrasena);
         }
 
         if (!verify)
         {
             return null;
         }
-        
+
         response.Codigo = "1P2e3r4m5i6t7i8d9o";
         response.Mensaje = "Credenciales validadas";
 
         return response;
     }
 
-    static bool ValidarSHA256(string input, string hashEsperado)
+    static bool ValidarSHA256(string input, string userDB)
     {
-        using (SHA256 sha256 = SHA256.Create())
+        using (SHA1 sha1 = SHA1.Create())
         {
-            byte[] bytes = Encoding.UTF8.GetBytes(input);
-            byte[] hashBytes = sha256.ComputeHash(bytes);
-            string hashCalculado2 = Convert.ToHexString(hashBytes); // Desde .NET 5 en adelante
-            string hashCalculado = hashCalculado2.Substring(0, 40);
-            return string.Equals(hashCalculado, hashEsperado, StringComparison.OrdinalIgnoreCase);
+            byte[] data = Encoding.ASCII.GetBytes(input);
+            byte[] result = sha1.ComputeHash(data);
+
+            StringBuilder sb = new StringBuilder();
+            foreach (byte b in result)
+            {
+                sb.Append(b.ToString("x2")); // formato hexadecimal con 2 dígitos
+            }
+
+            if (!sb.ToString().ToUpper().Equals(userDB.ToUpper()))
+            {
+                return false;
+            }
+            return true;
         }
     }
 }
+
