@@ -19,7 +19,7 @@ builder.Services.AddCors(options =>
               .AllowAnyHeader();
     });
 });
-
+builder.WebHost.UseIISIntegration();
 var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
@@ -35,15 +35,7 @@ app.UseSwaggerUI(options =>
     options.SwaggerEndpoint("/swagger/v1/swagger.json", "API - ADMISION");
     options.RoutePrefix = ""; // Aquí cambias la ruta
 });
-if (app.Environment.IsDevelopment())
-{
-    builder.WebHost.UseUrls("http://10.4.17.10:4034");
-}
-if (app.Environment.IsProduction())
-{
-    builder.WebHost.UseUrls("http://10.4.17.10:5034");
-}
-
+// builder.WebHost.UseUrls("http://10.4.17.10:4034");
 app.UseHttpsRedirection();
 app.UseCors("PermitirTodos");
 app.UseAuthorization();

@@ -20,7 +20,9 @@ public class UsuarioService : IUsuarioService
         bool verify = false;
         string msg = "";
         Usuarios? user = await _context.Usuarios
-                            .Where(a => a.Estado.Equals("1") && !string.IsNullOrEmpty(a.Revision))
+                            .Where(a => a.Estado.Equals("1")
+                            //  && !string.IsNullOrEmpty(a.Revision)
+                             )
                           .FirstOrDefaultAsync(a => a.Usuario.Equals(request.Usuario));
         UsuarioLoginRes response = new UsuarioLoginRes();
         if (user == null)
